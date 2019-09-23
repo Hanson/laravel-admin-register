@@ -59,6 +59,6 @@ class LaravelAdminRegisterController extends AuthController
 
         DB::table($table)->insert([$field => $data['mobile'], 'password' => bcrypt($data['password'])]);
 
-        return response()->redirectToRoute('admin.login');
+        return redirect()->route('admin.login');
     }
 }

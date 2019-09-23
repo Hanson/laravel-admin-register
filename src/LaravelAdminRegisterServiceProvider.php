@@ -30,8 +30,6 @@ class LaravelAdminRegisterServiceProvider extends ServiceProvider
         }
 
         $this->app->booted(function () {
-            LaravelAdminRegister::routes(__DIR__.'/../routes/web.php');
-
             Route::group(['middleware' => 'web'], __DIR__.'/../routes/web.php');
         });
     }
