@@ -20,7 +20,7 @@ php artisan vendor:publish --provider=Hanson\LaravelAdminRegister\LaravelAdminRe
 
 ## 修改迁移
 一般来说我们在执行完 `php artisan admin:install` 的时候，都会修改 `CreateAdminTables`,我这里改为 mobile 为主要唯一索引，所以下面的配置 `username_field` 我也改为 mobile
-``` 
+```php
 Schema::create(config('admin.database.users_table'), function (Blueprint $table) {
     $table->increments('id');
     $table->string('mobile', 11)->unique();
@@ -38,7 +38,7 @@ php artisan db:seed --class=\Hanson\LaravelAdminRegister\AdminTablesSeeder
 
 ## 编辑登录
 在 app/Admin/Controllers/AuthController.php 中添加
-``` 
+```php
 class AuthController extends BaseAuthController
 {
     public function postLogin(Request $request)
@@ -65,7 +65,7 @@ class AuthController extends BaseAuthController
 ## 编辑扩展配置
 在 config/admin.php 添加配置
 
-``` 
+```php
 'extensions' => [
     'laravel_admin_register' => [
         'cache_key' => 'register.code.', // 缓存前缀
@@ -82,7 +82,7 @@ class AuthController extends BaseAuthController
 
 ## 短信发送自定义
 编辑 app/Providers/AppServiceProvider.php
-``` 
+```php
 public function register()
 {
     // 返回内容参考 https://github.com/overtrue/easy-sms 中不同短信服务商的要求
