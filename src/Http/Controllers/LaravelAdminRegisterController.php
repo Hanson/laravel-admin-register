@@ -2,8 +2,8 @@
 
 namespace Hanson\LaravelAdminRegister\Http\Controllers;
 
-use App\Models\User;
 use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\Role;
 use Encore\Admin\Controllers\AuthController;
 use Encore\Admin\Layout\Content;
 use Hanson\LaravelAdminRegister\RegisterRepository;
@@ -57,7 +57,9 @@ class LaravelAdminRegisterController extends AuthController
             return ['error_code' => 1, 'error_msg' => '该账号已注册，请直接登录'];
         }
 
-        DB::table($table)->insert([$field => $data['mobile'], 'password' => bcrypt($data['password'])]);
+        $admin = Administrator::query()->firstOrCreate([$field => $data['mobile']], ['password' => bcrypt($data['password'])]);
+
+        $admin->roles()->attach(Role::query()->where('slug', config('admin.extensions.laravel_admin_register.register_as', 'administrator')));
 
         return redirect()->route('admin.login');
     }
