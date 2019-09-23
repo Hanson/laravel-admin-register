@@ -2,10 +2,10 @@
 
 namespace Hanson\LaravelAdminRegister\Http\Controllers;
 
-use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Auth\Database\Role;
 use Encore\Admin\Controllers\AuthController;
 use Encore\Admin\Layout\Content;
+use Hanson\LaravelAdminRegister\Administrator;
 use Hanson\LaravelAdminRegister\RegisterRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,8 +41,10 @@ class LaravelAdminRegisterController extends AuthController
 
     public function postRegister(Request $request, RegisterRepository $repository)
     {
+        $field = config('admin.extensions.laravel_admin_register.database.username_field', 'mobile');
+
         $data = Validator::make($request->all(), [
-            'mobile' => ['required', 'string', 'max:11'],
+            $field => ['required', 'string', 'max:11'],
             'code' => ['required', 'string', 'max:4'],
             'password' => ['required', 'string', 'min:8'],
         ])->validate();
@@ -52,7 +54,7 @@ class LaravelAdminRegisterController extends AuthController
         }
 
         if (DB::table($table = config('admin.database.users_table'))
-            ->where($field = config('admin.extensions.laravel_admin_register.database.username_field', 'mobile'), $data['mobile'])
+            ->where($field, $data['mobile'])
             ->exists()) {
             return ['error_code' => 1, 'error_msg' => '该账号已注册，请直接登录'];
         }
