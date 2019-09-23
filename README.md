@@ -1,8 +1,7 @@
 laravel-admin extension
 ======
 
-
-https://github.com/overtrue/easy-sms
+laravel-admin 短信注册扩展
 
 # 安装
 
@@ -13,27 +12,31 @@ composer require hanson/laravel-admin-register:dev-master
 
 # 配置
 
-发布资源，之后会生成一个 config/sms.php 配置，具体短信配置可查看 https://github.com/overtrue/easy-sms 
+## 发布资源
 ```
 php artisan vendor:publish --provider=Hanson\LaravelAdminRegister\LaravelAdminRegisterServiceProvider
 ```
+发布资源，之后会生成一个 config/sms.php 配置，具体短信配置可查看 https://github.com/overtrue/easy-sms 
 
-一般来说我们在执行完 `php artisan admin:install` 的时候，都会修改 `CreateAdminTables`,我这里改为 mobile 为主要识别，所以下方的配置 `username_field` 我也改为 mobile
+## 修改迁移
+一般来说我们在执行完 `php artisan admin:install` 的时候，都会修改 `CreateAdminTables`,我这里改为 mobile 为主要唯一索引，所以下面的配置 `username_field` 我也改为 mobile
 ``` 
 Schema::create(config('admin.database.users_table'), function (Blueprint $table) {
     $table->increments('id');
     $table->string('mobile', 11)->unique();
-    $table->string('avatar')->nullable();
+    $table->string('password', 60);
     $table->string('remember_token', 100)->nullable();
     $table->timestamps();
 });
 ```
 
-跑 `php artisan admin:install`的时候，如果有改动用户表的字段，会标错，你可以执行下面的命令重新执行兼容性的版本
+## 执行填充
+跑 `php artisan admin:install`的时候，如果有改动用户表的字段，会报错，你可以执行下面的命令重新执行兼容性的版本
 ``` 
 php artisan db:seed --class=\Hanson\LaravelAdminRegister\AdminTablesSeeder
 ```
 
+## 编辑登录
 在 app/Admin/Controllers/AuthController.php 中添加
 ``` 
 class AuthController extends BaseAuthController
@@ -59,6 +62,7 @@ class AuthController extends BaseAuthController
 }
 ```
 
+## 编辑扩展配置
 在 config/admin.php 添加配置
 
 ``` 
@@ -76,6 +80,18 @@ class AuthController extends BaseAuthController
 ],
 ```
 
-你可以使用账号 `18000000000` 密码 `admin` 去登录创建角色，修改注册用户的默认角色
+## 短信发送自定义
+编辑 app/Providers/AppServiceProvider.php
+``` 
+public function register()
+{
+    // 返回内容参考 https://github.com/overtrue/easy-sms 中不同短信服务商的要求
+    LaravelAdminRegister::setting(function ($code) {
+        return ['content' => "验证码: $code ，请于5分钟内完成验证，若非本人操作，请忽略本短信。"];
+    });
+}
+```
 
-# 
+## 体验
+
+你可以使用账号 `18000000000` 密码 `admin` 去登录创建角色，修改注册用户的默认角色
