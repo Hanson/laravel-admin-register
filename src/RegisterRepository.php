@@ -48,11 +48,11 @@ class RegisterRepository
         $cache = Cache::get($cacheKey);
 
         if (!$cache) {
-            return ['error_code' => 1, 'err_msg' => '验证码已过期或不存在'];
+            return '验证码已过期或不存在';
         }
 
         if ($cache['code'] != $code) {
-            return ['error_code' => 1, 'err_msg' => '验证码不正确'];
+            return '验证码不正确';
         }
 
         return true;

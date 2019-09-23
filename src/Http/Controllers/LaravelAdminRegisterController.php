@@ -48,7 +48,7 @@ class LaravelAdminRegisterController extends AuthController
         ])->validate();
 
         if ($result = $repository->validate($data['mobile'], $data['code']) !== true) {
-            return $result;
+            return back()->withErrors($result);
         }
 
         if (DB::table($table = config('admin.database.users_table'))
@@ -59,6 +59,6 @@ class LaravelAdminRegisterController extends AuthController
 
         DB::table($table)->insert([$field => $data['mobile'], 'password' => bcrypt($data['password'])]);
 
-        return redirect(route('admin.login'));
+        return response()->redirectToRoute('admin.login');
     }
 }
