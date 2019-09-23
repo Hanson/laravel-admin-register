@@ -69,11 +69,11 @@ class AuthController extends BaseAuthController
 'extensions' => [
     'laravel_admin_register' => [
         'cache_key' => 'register.code.', // 缓存前缀
-        'send_limit' => 6, // 限制 60 秒内只能发一次
+        'send_limit' => 60, // 限制 60 秒内只能发一次
         'expires_in' => 300, // 5 分钟（300秒）内有效
         'is_mock' => true, // 为 true 时不发短信，验证码为 0000
         'database' => [
-            'username_field' => 'mobile',
+            'username_field' => 'mobile', // 管理员数据库唯一索引字段，也就是存储手机号码的字段
         ],
         'register_as' => 'administrator', // 用户注册的默认角色 slug，可以登录后去创建角色
     ]
