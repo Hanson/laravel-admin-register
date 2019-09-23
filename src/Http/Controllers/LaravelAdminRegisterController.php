@@ -51,7 +51,7 @@ class LaravelAdminRegisterController extends AuthController
             return $result;
         }
 
-        if (DB::table($table = config('admin.extensions.laravel_admin_register.database.table', 'users'))
+        if (DB::table($table = config('admin.database.users_table'))
             ->where($field = config('admin.extensions.laravel_admin_register.database.username_field', 'mobile'), $data['mobile'])
             ->exists()) {
             return ['error_code' => 1, 'error_msg' => '该账号已注册，请直接登录'];
