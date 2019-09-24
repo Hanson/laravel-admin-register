@@ -85,7 +85,7 @@ class AuthController extends BaseAuthController
 ```php
 public function register()
 {
-    // 返回内容参考 https://github.com/overtrue/easy-sms 中不同短信服务商的要求
+    // 返回内容参考 https://github.com/overtrue/easy-sms 中不同短信服务商的要求，此处返回 $easysms->send() 的第二个参数
     LaravelAdminRegister::setting(function ($code) {
         return ['content' => "验证码: $code ，请于5分钟内完成验证，若非本人操作，请忽略本短信。"];
     });

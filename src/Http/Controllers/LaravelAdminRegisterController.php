@@ -50,13 +50,13 @@ class LaravelAdminRegisterController extends AuthController
         ])->validate();
 
         if ($result = $repository->validate($data['mobile'], $data['code']) !== true) {
-            return back()->withErrors($result);
+            return back()->withErrors(['code' => $result]);
         }
 
         if (DB::table($table = config('admin.database.users_table'))
             ->where($field, $data['mobile'])
             ->exists()) {
-            return back()->withErrors('该账号已注册，请直接登录');
+            return back()->withErrors(['mobile' => '该账号已注册，请直接登录']);
         }
 
         $admin = new Administrator;

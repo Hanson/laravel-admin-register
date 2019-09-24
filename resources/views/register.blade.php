@@ -93,7 +93,7 @@
   new Vue({
     el: '#app',
     data: {
-      mobile: '',
+      mobile: '{{ old('mobile') }}',
       count_down: 60,
       code_text: '发送验证码'
     },
