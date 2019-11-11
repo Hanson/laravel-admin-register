@@ -94,4 +94,6 @@ public function register()
 
 ## 体验
 
-你可以使用账号 `18000000000` 密码 `admin` 去登录创建角色，修改注册用户的默认角色
+执行 `php artisan serve`，然后你可以访问 http://127.0.0.1:8000/register 进行注册，测试环境验证码为 `0000` （见配置 is_mock）
+
+你可以使用账号 `18000000000` 密码 `admin` 去登录创建角色，修改注册用户的默认角色（见配置 register_as）
