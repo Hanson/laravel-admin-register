@@ -74,7 +74,10 @@
       </div>
       <div class="row">
         <!-- /.col -->
-        <div class="col-xs-offset-8 col-xs-4">
+        <div class="col-xs-8">
+          <a href="/admin/auth/login">前往登录</a>
+        </div>
+        <div class="col-xs-4">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-primary btn-block btn-flat">注册</button>
         </div>
