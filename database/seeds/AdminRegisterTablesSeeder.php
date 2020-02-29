@@ -1,14 +1,12 @@
 <?php
 
-namespace Hanson\LaravelAdminRegister;
-
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Auth\Database\Permission;
 use Encore\Admin\Auth\Database\Role;
 use Illuminate\Database\Seeder;
 
-class AdminTablesSeeder extends Seeder
+class AdminRegisterTablesSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -14,7 +14,7 @@ composer require hanson/laravel-admin-register:dev-master
 
 ## 发布资源
 ```
-php artisan vendor:publish --provider=Hanson\LaravelAdminRegister\LaravelAdminRegisterServiceProvider
+php artisan vendor:publish --tag=laravel-admin-register
 ```
 发布资源，之后会生成一个 config/sms.php 配置，具体短信配置可查看 https://github.com/overtrue/easy-sms 
 
@@ -33,7 +33,7 @@ Schema::create(config('admin.database.users_table'), function (Blueprint $table)
 ## 执行填充
 跑 `php artisan admin:install`的时候，如果有改动用户表的字段，会报错，你可以执行下面的命令重新执行兼容性的版本
 ``` 
-php artisan db:seed --class=\Hanson\LaravelAdminRegister\AdminTablesSeeder
+php artisan db:seed --tag=AdminRegisterTablesSeeder
 ```
 
 ## 编辑登录
